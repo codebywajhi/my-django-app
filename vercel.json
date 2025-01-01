@@ -1,11 +1,24 @@
 {
-    "builds": [
-      {
-        "src": "requirements.txt", 
-        "use": "@vercel/python", 
-        "config": {
-          "runtime": "python3.11" 
-        }
+  "builds": [
+    {
+      "src": "requirements.txt",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.12.6"
       }
-    ]
-  }
+    }
+  ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "project.settings"
+  },
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/media/(.*)",
+      "dest": "/media/$1"
+    }
+  ]
+}
