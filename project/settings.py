@@ -26,8 +26,11 @@ SECRET_KEY = 'django-insecure-a3(wpulm!h0k107ay#7wk__%dp$j97@u7(@_$g)d9!6r*4ds!8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'my-django-8rvwfrmpx-wajhis-projects.vercel.app',
+    'localhost',
+    '127.0.0.1'
+]
 
 # Application definition
 
@@ -114,12 +117,16 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.1/howto/static-files/
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

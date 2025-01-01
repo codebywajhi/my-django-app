@@ -1,11 +1,18 @@
 {
-    "builds": [
-      {
-        "src": "requirements.txt", 
-        "use": "@vercel/python", 
-        "config": {
-          "runtime": "python3.11" 
-        }
+  "version": 2,
+  "builds": [
+    {
+      "src": "manage.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb"
       }
-    ]
-  }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}
