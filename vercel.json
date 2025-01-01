@@ -4,7 +4,7 @@
         "src": "requirements.txt", 
         "use": "@vercel/python", 
         "config": {
-          "runtime": "python3.11" 
+          "runtime": "3.12.6" 
         }
       }
     ]
