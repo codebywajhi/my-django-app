@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Data Fetcher</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #003366;
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #00509e;
+        }
+        .form-control {
+            border: 2px solid #cce7ff;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .form-control:focus {
+            border-color: #00509e;
+            box-shadow: 0 0 5px rgba(0, 80, 158, 0.5);
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #00509e, #4caf50);
+            border: none;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #4caf50, #00509e);
+            box-shadow: 0 5px 15px rgba(0, 80, 158, 0.5);
+        }
+        .refresh-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+        }
+        h2 {
+            color: #333;
+            margin-top: 30px;
+        }
+        pre {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .loading {
+            display: none; /* Hidden by default */
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000; /* Ensure it appears above other content */
+        }
+        .loading img{
+            height:30%;
+            width:30%;
+            margin-top: 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 30%;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Refresh Button -->
+        <button class="btn btn-primary refresh-button" onclick="window.location.reload();">Refresh</button>
+
+        <!-- Loading Spinner -->
+        <div class="loading" id="loading-spinner">
+            <img src="https://i.pinimg.com/originals/07/24/88/0724884440e8ddd0896ff557b75a222a.gif" alt="Loading..."> <!-- Example loading icon -->
+        </div>
+
+        <!-- Main Content -->
+        <h1>Website Data Fetcher</h1>
+        <form id="data-fetcher-form" action="{% url 'proxy' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="url">Enter the URL:</label>
+                <input type="text" id="url" name="url" class="form-control" placeholder="e.g., https://example.com" required>
+            </div>
+            <button type="submit" class="btn btn-primary" >Fetch Data</button>
+        </form>
+        {% if error_message %}
+            <div class="alert alert-danger">{{ error_message }}</div>
+        {% endif %}
+        {% if data %}
+            <h2>Fetched Data:</h2>
+            <pre>{{ data }}</pre>
+        {% endif %}
+    </div>
+    <script>
+    // loading the icon
+    document.getElementById('data-fetcher-form').addEventListener('submit', function(event) {
+        // Show the loading spinner
+        document.getElementById('loading-spinner').style.display = 'block';
+    });
+
+        document.getElementById('data-fetcher-form').addEventListener('submit', function(event) {
+            const urlInput = document.getElementById('url').value;
+            const pattern = /^(http|https):\/\/[^\s]+$/; // Regex to check for http:// or https:// at the start
+
+            if (!pattern.test(urlInput)) {
+                event.preventDefault(); // Prevent form submission
+                alert('Please enter a valid URL:\n- Starts with "http://" or "https://"\n- No spaces or invalid characters.');
+            }
+        });
+        document.getElementById('data-fetcher-form').addEventListener('submit', function(event) {
+            const urlInput = document.getElementById('url').value;
+            // Handle form submission
+        });
+
+    // Attach the function to the refresh button
+    document.querySelector('.refresh-button').addEventListener('click', quitDriverAndRefresh);
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
