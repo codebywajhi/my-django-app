@@ -3,7 +3,7 @@ import sys
 
 # Add the virtual environment to the sys.path
 # Update this path to your virtual environment location
-activate_this = '/var/www/projects/django/my-django-app/venv/bin/activate_this.py'
+activate_this = '/var/www/projects/django/my-django-app/.venv/bin/activate_this.py'
 exec(open(activate_this).read(), dict(__file__=activate_this))
 
 # Add your project to the sys.path
