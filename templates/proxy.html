@@ -90,10 +90,14 @@
             align-items: center;
             margin-left: 30%;
         }
+        .red{
+            background-color: red;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <div class="container">
         <!-- Refresh Button -->
         <button class="btn btn-primary refresh-button" onclick="window.location.reload();">Refresh</button>
@@ -105,6 +109,8 @@
 
         <!-- Main Content -->
         <h1>Website Data Fetcher</h1>
+
+
         <form id="data-fetcher-form" action="{% url 'proxy' %}" method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -113,38 +119,67 @@
             </div>
             <button type="submit" class="btn btn-primary" >Fetch Data</button>
         </form>
-        {% if error_message %}
-            <div class="alert alert-danger">{{ error_message }}</div>
-        {% endif %}
-        {% if data %}
-            <h2>Fetched Data:</h2>
-            <pre>{{ data }}</pre>
-        {% endif %}
-    </div>
-    <script>
-    // loading the icon
-    document.getElementById('data-fetcher-form').addEventListener('submit', function(event) {
-        // Show the loading spinner
-        document.getElementById('loading-spinner').style.display = 'block';
-    });
 
+        <div id="data-section">
+            {% if data %}
+            <h2>Fetched Data:</h2>
+                <pre>{{ data|safe }}</pre>
+            {% else %}
+                 <h2>
+                 No data fetched yet.
+                </h2>
+            {% endif %}
+        </div>
+    
+        <div id="error-section">
+            {% if error_message %}
+            <h2>Error Messages:</h2>
+                <p style="color: red;">{{ error_message }}</p>
+            {% else %}
+                <!-- <p>No errors encountered.</p> -->
+            {% endif %}
+        </div>
+    
+    </div>
+
+    <script>
+        
+        // Attach the event listener to the form submission
         document.getElementById('data-fetcher-form').addEventListener('submit', function(event) {
             const urlInput = document.getElementById('url').value;
             const pattern = /^(http|https):\/\/[^\s]+$/; // Regex to check for http:// or https:// at the start
-
+            const loadingSpinner = document.getElementById('loading-spinner');
+    
+            // Validate the URL
             if (!pattern.test(urlInput)) {
                 event.preventDefault(); // Prevent form submission
                 alert('Please enter a valid URL:\n- Starts with "http://" or "https://"\n- No spaces or invalid characters.');
+            } else {
+                // Show the loading spinner if the URL is valid
+                loadingSpinner.style.display = 'block';
             }
         });
-        document.getElementById('data-fetcher-form').addEventListener('submit', function(event) {
-            const urlInput = document.getElementById('url').value;
-            // Handle form submission
-        });
+    
+        // Attach the function to the refresh button
+        document.querySelector('.refresh-button').addEventListener('click', quitDriverAndRefresh);
+        
+        function quitDriverAndRefresh() {
+            if (fetchInterval) {
+                clearInterval(fetchInterval); // Clear the fetch interval if it exists
+            }
+            if (controller) {
+                controller.abort(); // Abort the ongoing fetch request if it exists
+            }
 
-    // Attach the function to the refresh button
-    document.querySelector('.refresh-button').addEventListener('click', quitDriverAndRefresh);
+            driver.quit()
+            window.location.reload();
+        
+        }
+        
+
     </script>
+
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
