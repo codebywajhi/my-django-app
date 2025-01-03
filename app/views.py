@@ -40,7 +40,7 @@ def parse_proxies(file_path):
 # Configure Selenium WebDriver with proxy and SSL certificate
 def configure_selenium_with_proxy(proxy):
     global driver_instance  # Use the global variable
-    chrome_driver_path = r"C:\Program Files\chromedriver-win64\chromedriver.exe"
+    chrome_driver_path = "/usr/local/bin/chromedriver"  # Hostinger vps path **
     
     options = webdriver.ChromeOptions()
     options.add_argument("--disable-gpu")
