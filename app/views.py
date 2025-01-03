@@ -45,6 +45,11 @@ def configure_selenium_with_proxy(proxy):
     options = webdriver.ChromeOptions()
     options.add_argument("--disable-gpu")
     options.add_argument("--ignore-certificate-errors")
+    options.add_argument(f'--proxy-server={proxy}')
+    options.add_argument('--headless')  
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--remote-debugging-port=9222')
 
     # Add SSL certificate if exists
     if os.path.exists(SSL_CERT_PATH):
