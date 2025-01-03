@@ -29,7 +29,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'my-django-8rvwfrmpx-wajhis-projects.vercel.app',
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+    '89.116.50.221'
 ]
 
 # Application definition
