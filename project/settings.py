@@ -30,7 +30,8 @@ ALLOWED_HOSTS = [
     'my-django-8rvwfrmpx-wajhis-projects.vercel.app',
     'localhost',
     '127.0.0.1',
-    '89.116.50.221'
+    '89.116.50.221',
+    'bot-scrapper.marketxtractor.ai'
 ]
 
 # Application definition
